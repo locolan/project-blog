@@ -1,0 +1,3 @@
+- models/ (This folder stores classes that inherit from ActiveRecord.)
+- views/ (This folder stores templates that Sinatra generates HTML from.)
+- Etc.
