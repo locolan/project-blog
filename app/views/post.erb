@@ -1,0 +1,20 @@
+<% if @i = 0 %>
+	<% if @post_title != "" %>
+	<p> Enter your post body below: </p>
+	<form method="get" action="/post/new_post/">
+		<input type="text" name="header" placeholder="header here"><br>
+		<input type="text" height="500" width="600" name="body" placeholder="text body here"><br>
+		<input type="submit" value="Submit">
+	</form>
+	<% @i += 1 %>
+	<% else %>
+	<% end %>
+<% else %>
+	<p><%= params[:header] %></p>
+	<p><%= params[:body]%>
+	<br>
+	<form method="get" action="/post/:id">
+		Submit if you're okay with this!<br>
+		<input type="submit"value="Submit">
+	</form>	
+<% end %>

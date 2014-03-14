@@ -1,0 +1,16 @@
+<% if @signed_up %>
+	<h2>Please enter your highly secured credentials</h2>
+	<form method="get" action="/user_sign_in/">
+			<input type="text" name="un" placeholder="Username">
+			<input type="password" name="pw" placeholder="Password">
+			<input type="submit" value="Submit">
+	</form>
+<% else %>
+<h2>Time to start BLOGOSPHERE TUMBLR PINTREST FACESPACE!</h2>
+<p>Sign up here:</p>
+<form method="get" action="/new_user/">
+	<input type ="text" name="un" placeholder="Username">
+	<input type ="password" name="pw" palceholder="Password">
+	<input type ="submit" value="Submit">
+</form>
+<% end %>
