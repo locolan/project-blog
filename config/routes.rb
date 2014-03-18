@@ -1,4 +1,19 @@
 ProjectBlog::Application.routes.draw do
+  
+  get '/' => 'pages#home'
+  
+  get "/sign_up/" => 'pages#sign_up'
+  
+  get "/sign_in/" => 'pages#sign_in'
+  
+  get "/user_sign_in/" => 'pages#check_login_info'
+  
+  get "/user/:un" => 'pages#user'
+  
+  get "/new_user/" => 'pages#new_user'
+  
+  get "/post/new_post/" => 'pages#new_post'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
