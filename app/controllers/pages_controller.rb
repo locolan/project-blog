@@ -1,4 +1,4 @@
-class PagesController
+class PagesController <ApplicationController
   
   def home
     render "home"
@@ -11,7 +11,7 @@ class PagesController
     # @signed_up         = true
   
   # get "/user_sign_in/"
-    if User.find(params[:un])
+    if (User.find_by_name "#{params[:un]}")
       redirect_to("/user/:#{params[:un]}")
     else
       redirect_to("/sign_up/")
@@ -30,12 +30,12 @@ class PagesController
   
   # get "/user/:un" do
   def user
-
+    render "user"
   end
   
   # get "/new_user/" 
   def new_user
-    if !(User.find(params[:un]))
+    if !(User.find_by_name("#{params[:un]}"))
       @user = User.create(:name => params[:un], :secure_password => params[:pw])
       redirect_to("/user/#{params[:un]}")
     else
