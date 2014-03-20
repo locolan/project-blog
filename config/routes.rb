@@ -1,5 +1,7 @@
 ProjectBlog::Application.routes.draw do
   
+  resources :user
+  
   get '/' => 'pages#home'
   
   get "/sign_up/" => 'pages#sign_up'
