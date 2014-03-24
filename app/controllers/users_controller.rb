@@ -11,17 +11,6 @@ class UsersController <ApplicationController
     if @user.save
       session[:user_id] = @user.id # <- This is all "auto-login" is. Ha.
       
-      twilio_sid = ENV["TWILIO_ACCOUNT_SID"]
-      twilio_token = ENV["TWILIO_AUTH_TOKEN"]
-      
-      # Send myself a text message, congratulating me on having a new user.
-      @client = Twilio::REST::Client.new twilio_sid, twilio_token
-      @client.account.messages.create(
-        :from => ENV["TWILIO_NUMBER"],
-        :to => ENV["MY_PHONE_NUMBER"],
-        :body => "Congrats! New user, with email #{@user.email}"
-      )
-      
       redirect_to(:root)
     else
       render "new"
