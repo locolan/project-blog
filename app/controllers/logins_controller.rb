@@ -3,7 +3,7 @@ class LoginsController < ApplicationController
   end
   
   def create
-    user = User.find_by_name(params[:username])
+    user = User.find_by_username(params[:username])
     
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id # <-- That is what a "log in" is.

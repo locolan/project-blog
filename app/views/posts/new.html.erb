@@ -1,0 +1,20 @@
+<%= form_for @post do |f| %>
+
+  <p>
+    <%= label_tag :title %>
+    <%= text_field_tag :title %>
+  </p>
+  
+  <p>
+    <%= label_tag :header %>
+    <%= text_field_tag :header %>
+  </p>
+  
+  <p>
+    <%= label_tag :body %>
+    <%= text_area_tag :body, :size => "25x10" %>
+  </p>
+  
+  <%= submit_tag "Post" %>
+  
+<%= end %>
