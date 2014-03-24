@@ -1,5 +1,26 @@
-<form method="post" action= <%= users_path %>>
-  Username<input type="text" name="username">
-  Password<input type="password" name="password">
-  <input type="submit" value="Submit">
-</form>
+<h1>Sign Up</h1>
+
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <% @user.errors.full_messages.each do |error_msg| %>
+      <p><%= error_msg %></p>
+    <% end %>
+  <% end %>
+
+  <p>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </p>
+  
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </p>
+  
+  <p>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  
+  <%= f.submit %>
+<% end %>

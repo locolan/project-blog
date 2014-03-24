@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  secure_password: MyString
+  password: MyString
 
 two:
   name: MyString
-  secure_password: MyString
+  password: MyString

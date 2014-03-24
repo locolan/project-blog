@@ -1,37 +1,41 @@
 class UsersController <ApplicationController
 
 
-
-
-  def index
-    @users = User.all
-  end
-  
   def new
-    @users = User.all
+    @user = User.new
   end
-
+  
   def create
-    @user = User.create(:name => params[:username], :secure_password => params[:password])
-    redirect_to(user_path(@user.id))
-  end
-  
-  def show  
-    @user = User.find( :first, :conditions => ['name = ?', params[:username]] )
-  end
-  
-  def edit
-    @user = User.find( :all, :conditions => ['name = ?', params[:username]] )
-  end
-  
-  def update
-    @user = User.find( :all, :conditions => ['name = ?', params[:username]] )
-    @user
-  end
-  
-  def destroy
+    @user = User.new(params[:user])
     
+    if @user.save
+      session[:user_id] = @user.id # <- This is all "auto-login" is. Ha.
+      
+      twilio_sid = ENV["TWILIO_ACCOUNT_SID"]
+      twilio_token = ENV["TWILIO_AUTH_TOKEN"]
+      
+      # Send myself a text message, congratulating me on having a new user.
+      @client = Twilio::REST::Client.new twilio_sid, twilio_token
+      @client.account.messages.create(
+        :from => ENV["TWILIO_NUMBER"],
+        :to => ENV["MY_PHONE_NUMBER"],
+        :body => "Congrats! New user, with email #{@user.email}"
+      )
+      
+      redirect_to(:root)
+    else
+      render "new"
+    end
   end
+  
+  # def edit
+  #   @user = User.find( :all, :conditions => ['name = ?', params[:username]] )
+  # end
+  # 
+  # def update
+  #   @user = User.find( :all, :conditions => ['name = ?', params[:username]] )
+  #   @user
+  # end
   
   # def home
   #   render "home"
@@ -39,9 +43,9 @@ class UsersController <ApplicationController
   # 
   # # get "/sign_up/" or get "/sign_in/" 
   # def check_login_info
-  #   # @signed_up         = false
+  #   # @signed_up = false
   #   # something
-  #   # @signed_up         = true
+  #   # @signed_up = true
   # 
   # # get "/user_sign_in/"
   #   if (User.find_by_name "#{params[:un]}")
@@ -52,12 +56,12 @@ class UsersController <ApplicationController
   # end
   # 
   # def sign_up
-  #   @signed_up = false
+  #   @signed_up   = false
   #   render "sign"
   # end
   # 
   # def sign_in
-  #   @signed_up = true
+  #   @signed_up   = true
   #   render "sign"
   # end
   # 
@@ -69,7 +73,7 @@ class UsersController <ApplicationController
   # # get "/new_user/" 
   # def new_user
   #   if !(User.find_by_name("#{params[:un]}"))
-  #     @user = User.create(:name => params[:un], :secure_password => params[:pw])
+  #     @user      = User.create(:name => params[:un], :password => params[:pw])
   #     redirect_to("/user/#{params[:un]}")
   #   else
   #     redirect_to("/sign_up/")
@@ -79,8 +83,8 @@ class UsersController <ApplicationController
   # # should get a title for the new post
   # # get "/post/new_post/" 
   # def new_post
-  #   @i = 0
-  #   @post_title = params[:title]
+  #   @i           = 0
+  #   @post_title  = params[:title]
   #   @post
   #   render "post"
   # end
